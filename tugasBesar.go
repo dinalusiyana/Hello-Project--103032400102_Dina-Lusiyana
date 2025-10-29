@@ -1,14 +1,17 @@
+//ini update terbaru untuk latihan Git
+
 package main
 
 import (
 	"fmt"
 )
-//tipe alias
+
+// tipe alias
 type Tanggal string
 type Durasi int
-type Kalori int 
+type Kalori int
 
-//Tipe Bentukan struct
+// Tipe Bentukan struct
 type Workout struct {
 	ID      int
 	Tanggal Tanggal
@@ -16,32 +19,34 @@ type Workout struct {
 	Durasi  Durasi
 	Kalori  Kalori
 }
-//array olahraga 
-const NMAX int = 1000 
+
+// array olahraga
+const NMAX int = 1000
+
 var olahraga [NMAX]Workout
 
 func main() {
 	var pilihan int
-	var nWorkout int = 0 
-	
+	var nWorkout int = 0
+
 	for pilihan != 6 {
 		menu()
 		fmt.Scan(&pilihan)
-		//pemanggilan func 
+		//pemanggilan func
 		if pilihan == 1 {
-		tambahWorkout(&nWorkout)
+			tambahWorkout(&nWorkout)
 		} else if pilihan == 2 {
-		tampilkanData(nWorkout)
+			tampilkanData(nWorkout)
 		} else if pilihan == 3 {
-		cariWorkout(nWorkout)
+			cariWorkout(nWorkout)
 		} else if pilihan == 4 {
-		rekapData(nWorkout)
+			rekapData(nWorkout)
 		} else if pilihan == 5 {
-		olahragaFav(nWorkout)
+			olahragaFav(nWorkout)
 		} else if pilihan == 6 {
-		fmt.Println("Terima kasih sudah menggunakan aplikasi")
+			fmt.Println("Terima kasih sudah menggunakan aplikasi")
 		} else {
-		fmt.Println("Pilihan tidak valid")
+			fmt.Println("Pilihan tidak valid")
 		}
 	}
 }
@@ -59,16 +64,14 @@ func menu() {
 	fmt.Println("| 6. Simpan & Keluar                  |")
 	fmt.Println("+-------------------------------------+")
 	fmt.Println(" Pilih menu:                         ")
-	
 
 }
 
-
-func tambahWorkout(nWorkout *int){
-	//penambahan data workout ke arr olahraga dan otomatis memperbarui jumlah data(nWorkout) yang tersimpan 
+func tambahWorkout(nWorkout *int) {
+	//penambahan data workout ke arr olahraga dan otomatis memperbarui jumlah data(nWorkout) yang tersimpan
 	var tgl, jenis string
 	var durasi, kalori int
-	
+
 	fmt.Print("Tanggal (YYYY-MM-DD): ")
 	fmt.Scan(&tgl)
 	fmt.Print("Jenis Olahraga: ")
@@ -77,8 +80,8 @@ func tambahWorkout(nWorkout *int){
 	fmt.Scan(&durasi)
 	fmt.Print("Kalori terbakar: ")
 	fmt.Scan(&kalori)
-	
-	//Proses penambahan data baru ke arr olhrg pada index nWorkout dengan elemen ID, Tanggal,  Jenis, Durasi, Kalori. 
+
+	//Proses penambahan data baru ke arr olhrg pada index nWorkout dengan elemen ID, Tanggal,  Jenis, Durasi, Kalori.
 	//Misalnya: jika *nWorkout = 3, maka data baru dimasukkan ke olahraga[3].
 	olahraga[*nWorkout] = Workout{
 		ID:      *nWorkout + 1, //pemberian identitas utk mempermudah pencarian data
@@ -87,14 +90,13 @@ func tambahWorkout(nWorkout *int){
 		Durasi:  Durasi(durasi),
 		Kalori:  Kalori(kalori),
 	}
-	*nWorkout++ //data ditambahkan 
-	
+	*nWorkout++ //data ditambahkan
+
 	fmt.Println("Data berhasil ditambahkan!")
-	
-	
+
 }
 
-//insertion sort 
+// insertion sort
 func tampilkanData(nWorkout int) {
 	var i, j int
 	var temp Workout
@@ -114,8 +116,8 @@ func tampilkanData(nWorkout int) {
 		}
 		olahraga[j+1] = temp
 	}
-	
-	//menampilkan data yang sudah disorting berdasarkan kalori(ascending) 
+
+	//menampilkan data yang sudah disorting berdasarkan kalori(ascending)
 	fmt.Println("\n=== Semua Data Workout ===")
 	for i = 0; i < nWorkout; i++ {
 		fmt.Printf("ID: %d | Tanggal: %s | Jenis: %s | Durasi: %d menit | Kalori: %d\n",
@@ -123,7 +125,7 @@ func tampilkanData(nWorkout int) {
 	}
 }
 
-func cariWorkout(nWorkout int){
+func cariWorkout(nWorkout int) {
 	var i int
 	var ditemukan int
 	var cariTanggal string
@@ -137,7 +139,7 @@ func cariWorkout(nWorkout int){
 	fmt.Scan(&cariTanggal)
 
 	for i = 0; i < nWorkout; i++ {
-		//Sequential search 
+		//Sequential search
 		if olahraga[i].Tanggal == Tanggal(cariTanggal) {
 			fmt.Printf("ID: %d | Tanggal: %s | Jenis: %s | Durasi: %d menit | Kalori: %d\n",
 				olahraga[i].ID, olahraga[i].Tanggal, olahraga[i].Jenis, olahraga[i].Durasi, olahraga[i].Kalori)
@@ -150,28 +152,26 @@ func cariWorkout(nWorkout int){
 	}
 }
 
-
-func rekapData(nWorkout int){
-    var totalDurasi Durasi
+func rekapData(nWorkout int) {
+	var totalDurasi Durasi
 	var totalKalori Kalori
-	var i int                         
+	var i int
 
-    if nWorkout == 0 {
-        fmt.Println("Data tidak ditemukan :(")
-        return
-    }
+	if nWorkout == 0 {
+		fmt.Println("Data tidak ditemukan :(")
+		return
+	}
 
-    // looping untuk hitung total durasi dan kalori
-    for i = 0; i < nWorkout; i++ {
-        totalDurasi += olahraga[i].Durasi
-        totalKalori += olahraga[i].Kalori
-    }
+	// looping untuk hitung total durasi dan kalori
+	for i = 0; i < nWorkout; i++ {
+		totalDurasi += olahraga[i].Durasi
+		totalKalori += olahraga[i].Kalori
+	}
 
-    fmt.Println("=== Rekap Workout Mingguan ===")
-    fmt.Println("Total Durasi Workout:", totalDurasi, "menit")
-    fmt.Println("Total Kalori Terbakar:", totalKalori, "kalori")
+	fmt.Println("=== Rekap Workout Mingguan ===")
+	fmt.Println("Total Durasi Workout:", totalDurasi, "menit")
+	fmt.Println("Total Kalori Terbakar:", totalKalori, "kalori")
 }
-
 
 func olahragaFav(nWorkout int) {
 	var jenis string
@@ -186,7 +186,7 @@ func olahragaFav(nWorkout int) {
 		return
 	}
 
-	// Selection sort digunakan untuk mengurutkan data 
+	// Selection sort digunakan untuk mengurutkan data
 	//berdasarkan jenis olahraga agar bisa dihitung frekuensinya secara berurutan.
 	for i = 0; i < nWorkout-1; i++ {
 		idx = i
@@ -214,7 +214,7 @@ func olahragaFav(nWorkout int) {
 		i++
 	}
 
-	// binary search digunakan untuk mencari frekuensi terbesar 
+	// binary search digunakan untuk mencari frekuensi terbesar
 	//pada array jenisList karena data tersebut sudah terurut.
 	idxMax = -1
 	maxJumlah = 0
